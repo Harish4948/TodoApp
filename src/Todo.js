@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react'
 import './Todo.css'
 import { List } from '@material-ui/core'
-import {Modal,Button,ListItemAvatar,ListItem,ListItemText} from '@material-ui/core';
+import {Modal,Button,ListItemAvatar,ListItem,ListItemText,InputLabel,Input} from '@material-ui/core';
 import db from './firebase'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,9 +36,10 @@ function Todo(props) {
         open={open}
         onClose={e=>setOpen(false)}> 
           <div className={classes.paper}>
-            <h1>Modal</h1>
-            <input value={input} onChange={e=> setInput(e.target.value)}></input>
-            <Button onClick={updateTodo}>Edit</Button>
+            <h1></h1>
+            <InputLabel >Edit a Todo</InputLabel>
+            <Input value={input} onChange={e=> setInput(e.target.value)}></Input>
+            <Button onClick={updateTodo}>Edit<EditIcon/></Button>
           </div>
       </Modal>
         <List className="todo_list">
@@ -50,8 +52,9 @@ function Todo(props) {
                     secondary="User"
                   />
             </ListItem>
-            <button onClick={e=> setOpen(true)}>Edit</button>
-            <DeleteForeverIcon onClick={e => db.collection('todos').doc(props.todo.id).delete()}/>
+            
+            <Button onClick={e=> setOpen(true)}> <EditIcon  /></Button>
+            <Button onClick={e => db.collection('todos').doc(props.todo.id).delete()}> <DeleteForeverIcon /></Button>
         </List>
       </>
     )
